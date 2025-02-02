@@ -1,8 +1,16 @@
+import { Outlet } from "react-router-dom";
+import Footer from "./components/Footer";
+import HeaderComponent from "./components/Header";
 import React from "react";
-import AppLayout from "./components/AppLayout";
 
-const App = () => {
-  return <AppLayout />;
+const AppLayout = () => {
+  return (
+    <>
+      <HeaderComponent />
+      <Outlet />
+      <Footer />
+    </>
+  );
 };
 
-export default App;
+export default AppLayout;
