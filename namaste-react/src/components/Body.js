@@ -2,10 +2,11 @@ import RestaurantCard from "./RestaurantCard";
 import { restaurantList } from "../Constants";
 import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
+import { Link } from "react-router-dom";
 
 function filterData(searchText, allRestaurant) {
   if (!searchText) {
-    return restaurantList;
+    return allRestaurant;
   }
 
   console.log("restaurant list - ", restaurantList);
@@ -30,7 +31,6 @@ const Body = () => {
   async function getRestaurants() {
     const data = await fetch(
       "https://www.swiggy.com/dapi/restaurants/list/v5?lat=18.5203896&lng=73.8567005&collection=83637&tags=layout_CCS_Burger&sortBy=&filters=&type=rcv2&offset=0&page_type=null"
-      // "https://www.swiggy.com/dapi/restaurants/list/v5?lat=18.5203896&lng=73.8567005&collection=80362&tags=layout_PavBhaji_Contextual&sortBy=&filters=&type=rcv2&offset=0&page_type=null"
     );
     const json = await data.json();
     console.log("json ->>", json?.data?.cards);
@@ -53,7 +53,7 @@ const Body = () => {
     <Shimmer />
   ) : (
     <>
-      <div className="search-continer">
+      <div className="search-container">
         <input
           type="text"
           className="search-input"
@@ -67,7 +67,6 @@ const Body = () => {
           className="search-btn"
           onClick={() => {
             const data = filterData(searchText, allRestaurant);
-            console.log("data ----<<", data);
             setFilteredRestaurants(data);
           }}
         >
@@ -78,10 +77,12 @@ const Body = () => {
       <div className="restaurant-list">
         {filteredRestaurants.map((restro) => {
           return (
-            <RestaurantCard
-              {...restro.card.card.info}
+            <Link
+              to={"/restaurant/" + restro?.card?.card?.info?.id}
               key={restro?.card?.card?.info?.id}
-            />
+            >
+              <RestaurantCard {...restro.card.card.info} />
+            </Link>
           );
         })}
       </div>
