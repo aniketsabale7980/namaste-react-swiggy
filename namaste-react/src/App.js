@@ -1,43 +1,25 @@
 import React from "react";
+import { Outlet } from "react-router-dom";
+import Footer from "./components/Footer";
+import HeaderComponent from "./components/Header";
 
-const App = () => {
-  return <AppLayout />;
-};
-
+/**
+ * create the multiple bundle for the Instamart
+ * chunking
+ * Code splitting
+ * Dynamic Bundling
+ * Lazy loading
+ * On demand Loading
+ * Dynamic import
+ */
 const AppLayout = () => {
   return (
     <>
       <HeaderComponent />
+      <Outlet />
+      <Footer />
     </>
   );
 };
 
-const Title = () => {
-  return (
-    <h1 id="title" key="h2">
-      <img
-        className="logo"
-        alt="logo"
-        src="https://static.vecteezy.com/system/resources/previews/013/195/659/non_2x/restaurant-delicious-food-logo-badge-line-style-design-with-smile-face-fork-and-spoon-icon-concept-for-catering-food-culinary-logo-design-vector.jpg"
-      />
-    </h1>
-  );
-};
-
-const HeaderComponent = () => {
-  return (
-    <>
-      <div className="nav-item">
-        <Title />
-        <ul className="">
-          <li>Home</li>
-          <li>About</li>
-          <li>Contact</li>
-          <li>Cart</li>
-        </ul>
-      </div>
-    </>
-  );
-};
-
-export default App;
+export default AppLayout;
