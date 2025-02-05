@@ -1,22 +1,9 @@
 import RestaurantCard from "./RestaurantCard";
-import { restaurantList } from "../Constants";
 import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
-
-function filterData(searchText, allRestaurant) {
-  if (!searchText) {
-    return allRestaurant;
-  }
-
-  console.log("restaurant list - ", restaurantList);
-  const filteredData = allRestaurant.filter((restro) => {
-    return restro?.card?.card?.info?.name
-      .toLowerCase()
-      .includes(searchText.toLowerCase());
-  });
-  return filteredData;
-}
+import { filterData } from "../utils/helper";
+import useOnline from "../utils/useOnline";
 
 const Body = () => {
   const [allRestaurant, setAllRestaurant] = useState([]);
@@ -33,12 +20,16 @@ const Body = () => {
       "https://www.swiggy.com/dapi/restaurants/list/v5?lat=18.5203896&lng=73.8567005&collection=83637&tags=layout_CCS_Burger&sortBy=&filters=&type=rcv2&offset=0&page_type=null"
     );
     const json = await data.json();
-    console.log("json ->>", json?.data?.cards);
     //optional chaining
     setAllRestaurant(json?.data?.cards);
     setFilteredRestaurants(json?.data?.cards);
   }
 
+  const isOnline = useOnline();
+
+  if (!isOnline) {
+    return <h1>Offiline, please check your internet connection.!</h1>;
+  }
   /**
    * conditional rendering
    * if restraurant is empty --> shimmer UI
@@ -48,7 +39,6 @@ const Body = () => {
   //early return --> not rendor component
   if (!allRestaurant) return null;
 
-  console.log("rendor");
   return allRestaurant.length === 0 ? (
     <Shimmer />
   ) : (
