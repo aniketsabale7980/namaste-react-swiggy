@@ -1,15 +1,17 @@
 import RestaurantCard from "./RestaurantCard";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import { filterData } from "../utils/helper";
 import useOnline from "../utils/useOnline";
+import UserContext from "../utils/UserContext";
 
 const Body = () => {
   const [allRestaurant, setAllRestaurant] = useState([]);
   const [searchText, setSearchText] = useState();
   const [filteredRestaurants, setFilteredRestaurants] = useState([]);
 
+  const { user, setUser } = useContext(UserContext);
   useEffect(() => {
     console.log("useEffect executed.");
     getRestaurants();
@@ -43,10 +45,10 @@ const Body = () => {
     <Shimmer />
   ) : (
     <>
-      <div className="p-5 bg-pink-50 my-4">
+      <div className="p-5 my-4 bg-pink-50">
         <input
           type="text"
-          className="focus:bg-red-200"
+          className="focus:bg-red-200 p-2 m-2"
           placeholder="Search"
           value={searchText}
           onChange={(e) => {
@@ -62,6 +64,24 @@ const Body = () => {
         >
           Search
         </button>
+        <input
+          value={user.name}
+          onChange={(e) => {
+            setUser({
+              ...user,
+              name: e.target.value,
+            });
+          }}
+        />
+        <input
+          value={user.email}
+          onChange={(e) => {
+            setUser({
+              ...user,
+              email: e.target.value,
+            });
+          }}
+        />
       </div>
 
       <div className="flex flex-wrap ">
