@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Footer from "./components/Footer";
 import HeaderComponent from "./components/Header";
+import UserContext from "./utils/UserContext";
 
 /**
  * create the multiple bundle for the Instamart
@@ -13,11 +14,20 @@ import HeaderComponent from "./components/Header";
  * Dynamic import
  */
 const AppLayout = () => {
+  const [user, setUser] = useState({
+    user: {
+      name: "Aniket",
+      email: "aniket@gmail.com",
+    },
+  });
+
   return (
     <>
-      <HeaderComponent />
-      <Outlet />
-      <Footer />
+      <UserContext.Provider value={{ user: user, setUser: setUser }}>
+        <HeaderComponent />
+        <Outlet />
+        <Footer />
+      </UserContext.Provider>
     </>
   );
 };
