@@ -18,7 +18,7 @@ const HeaderComponent = () => {
   const isOnline = useOnline();
 
   const { user } = useContext(UserContext);
-  console.log("userInfo ------->>", user);
+
   return (
     <>
       <div className="flex flex-col md:flex-row justify-between bg-pink-200 md:bg-blue-200 shadow-lg">
