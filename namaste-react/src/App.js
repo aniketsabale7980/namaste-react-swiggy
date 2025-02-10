@@ -15,10 +15,8 @@ import UserContext from "./utils/UserContext";
  */
 const AppLayout = () => {
   const [user, setUser] = useState({
-    user: {
-      name: "Aniket",
-      email: "aniket@gmail.com",
-    },
+    name: "Aniket",
+    email: "aniket@gmail.com",
   });
 
   return (
